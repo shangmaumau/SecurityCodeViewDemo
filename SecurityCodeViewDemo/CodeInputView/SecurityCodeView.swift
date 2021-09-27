@@ -10,7 +10,8 @@ import UIKit
 
 public typealias BooleanBlock = (_ isDone: Bool) -> Void
 public typealias VoidBlock = () -> Void
-/// 安全码输入视图。
+
+/// 安全码全流程处理视图。
 final class SecurityCodeView: UIView {
     private var contentView = UIView()
     private var bgView = UIView()

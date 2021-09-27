@@ -185,12 +185,17 @@ final class SecurityCodeLayerView: UIView, UITextFieldDelegate {
     }
 
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        // 冷冻期间，不让输入
         if isNeedFreeze {
             return false
         }
 
         if isRed {
+            // 变回默认色调
             turnDefault()
+            // 变红意味着上次输入错误
+            // 开始新的输入后，通过此回调，告诉上层视图，
+            // 输入错误多少次的文本框需要隐藏
             eventCallback?(.beginEditing)
         }
 
