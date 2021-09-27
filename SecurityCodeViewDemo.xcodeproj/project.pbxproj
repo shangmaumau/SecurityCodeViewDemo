@@ -3,10 +3,13 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9A1ABD952701C56A0033425C /* SecurityCodeDotsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A1ABD942701C56A0033425C /* SecurityCodeDotsView.swift */; };
+		9A1ABD972701C58C0033425C /* SecurityCodeLayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A1ABD962701C58C0033425C /* SecurityCodeLayerView.swift */; };
+		9A1ABD992701C5CF0033425C /* SecurityCodeInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A1ABD982701C5CF0033425C /* SecurityCodeInputView.swift */; };
 		9A74589F26FC453000D1A6CF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A74589E26FC453000D1A6CF /* AppDelegate.swift */; };
 		9A7458A126FC453000D1A6CF /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A7458A026FC453000D1A6CF /* SceneDelegate.swift */; };
 		9A7458A326FC453000D1A6CF /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A7458A226FC453000D1A6CF /* ViewController.swift */; };
@@ -15,6 +18,9 @@
 		9A7458AB26FC453200D1A6CF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9A7458A926FC453200D1A6CF /* LaunchScreen.storyboard */; };
 		9A7458B626FC453200D1A6CF /* SecurityCodeViewDemoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A7458B526FC453200D1A6CF /* SecurityCodeViewDemoTests.swift */; };
 		9A7458C126FC453200D1A6CF /* SecurityCodeViewDemoUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A7458C026FC453200D1A6CF /* SecurityCodeViewDemoUITests.swift */; };
+		9A7458CF26FC463700D1A6CF /* PasswordAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A7458CE26FC463700D1A6CF /* PasswordAlertView.swift */; };
+		9A7458D226FC46F600D1A6CF /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 9A7458D126FC46F600D1A6CF /* SnapKit */; };
+		9AB8E78726FC859D0067BCA1 /* SecurityCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AB8E78626FC859D0067BCA1 /* SecurityCodeView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -35,6 +41,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		9A1ABD942701C56A0033425C /* SecurityCodeDotsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecurityCodeDotsView.swift; sourceTree = "<group>"; };
+		9A1ABD962701C58C0033425C /* SecurityCodeLayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecurityCodeLayerView.swift; sourceTree = "<group>"; };
+		9A1ABD982701C5CF0033425C /* SecurityCodeInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecurityCodeInputView.swift; sourceTree = "<group>"; };
 		9A74589B26FC453000D1A6CF /* SecurityCodeViewDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SecurityCodeViewDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9A74589E26FC453000D1A6CF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9A7458A026FC453000D1A6CF /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -49,6 +58,8 @@
 		9A7458BC26FC453200D1A6CF /* SecurityCodeViewDemoUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SecurityCodeViewDemoUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		9A7458C026FC453200D1A6CF /* SecurityCodeViewDemoUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecurityCodeViewDemoUITests.swift; sourceTree = "<group>"; };
 		9A7458C226FC453200D1A6CF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		9A7458CE26FC463700D1A6CF /* PasswordAlertView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PasswordAlertView.swift; sourceTree = "<group>"; };
+		9AB8E78626FC859D0067BCA1 /* SecurityCodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecurityCodeView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +67,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9A7458D226FC46F600D1A6CF /* SnapKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -76,6 +88,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		9A1ABD932701C5510033425C /* CodeInputView */ = {
+			isa = PBXGroup;
+			children = (
+				9AB8E78626FC859D0067BCA1 /* SecurityCodeView.swift */,
+				9A1ABD942701C56A0033425C /* SecurityCodeDotsView.swift */,
+				9A1ABD962701C58C0033425C /* SecurityCodeLayerView.swift */,
+				9A1ABD982701C5CF0033425C /* SecurityCodeInputView.swift */,
+			);
+			path = CodeInputView;
+			sourceTree = "<group>";
+		};
 		9A74589226FC453000D1A6CF = {
 			isa = PBXGroup;
 			children = (
@@ -99,6 +122,8 @@
 		9A74589D26FC453000D1A6CF /* SecurityCodeViewDemo */ = {
 			isa = PBXGroup;
 			children = (
+				9A7458CE26FC463700D1A6CF /* PasswordAlertView.swift */,
+				9A1ABD932701C5510033425C /* CodeInputView */,
 				9A74589E26FC453000D1A6CF /* AppDelegate.swift */,
 				9A7458A026FC453000D1A6CF /* SceneDelegate.swift */,
 				9A7458A226FC453000D1A6CF /* ViewController.swift */,
@@ -144,6 +169,9 @@
 			dependencies = (
 			);
 			name = SecurityCodeViewDemo;
+			packageProductDependencies = (
+				9A7458D126FC46F600D1A6CF /* SnapKit */,
+			);
 			productName = SecurityCodeViewDemo;
 			productReference = 9A74589B26FC453000D1A6CF /* SecurityCodeViewDemo.app */;
 			productType = "com.apple.product-type.application";
@@ -215,6 +243,9 @@
 				Base,
 			);
 			mainGroup = 9A74589226FC453000D1A6CF;
+			packageReferences = (
+				9A7458D026FC46F600D1A6CF /* XCRemoteSwiftPackageReference "SnapKit" */,
+			);
 			productRefGroup = 9A74589C26FC453000D1A6CF /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -258,7 +289,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9A1ABD972701C58C0033425C /* SecurityCodeLayerView.swift in Sources */,
+				9A7458CF26FC463700D1A6CF /* PasswordAlertView.swift in Sources */,
 				9A7458A326FC453000D1A6CF /* ViewController.swift in Sources */,
+				9AB8E78726FC859D0067BCA1 /* SecurityCodeView.swift in Sources */,
+				9A1ABD992701C5CF0033425C /* SecurityCodeInputView.swift in Sources */,
+				9A1ABD952701C56A0033425C /* SecurityCodeDotsView.swift in Sources */,
 				9A74589F26FC453000D1A6CF /* AppDelegate.swift in Sources */,
 				9A7458A126FC453000D1A6CF /* SceneDelegate.swift in Sources */,
 			);
@@ -437,6 +473,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 7QDTX5YY5K;
 				INFOPLIST_FILE = SecurityCodeViewDemo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -455,6 +492,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 7QDTX5YY5K;
 				INFOPLIST_FILE = SecurityCodeViewDemo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -587,6 +625,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		9A7458D026FC46F600D1A6CF /* XCRemoteSwiftPackageReference "SnapKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SnapKit/SnapKit";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		9A7458D126FC46F600D1A6CF /* SnapKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 9A7458D026FC46F600D1A6CF /* XCRemoteSwiftPackageReference "SnapKit" */;
+			productName = SnapKit;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 9A74589326FC453000D1A6CF /* Project object */;
 }
