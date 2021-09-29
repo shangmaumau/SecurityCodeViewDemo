@@ -38,7 +38,8 @@ final class SecurityCodeDotsView: UIView {
         for index in 0 ..< count {
             let dotLayer = CALayer()
             dotLayer.bounds = CGRect(origin: .zero, size: size)
-            dotLayer.backgroundColor = UIColor.gray.cgColor
+            // rgba(35, 41, 52, 1)
+            dotLayer.backgroundColor = UIColor(red: 35 / 255.0, green: 41 / 255.0, blue: 52 / 255.0, alpha: 1).cgColor
             dotLayer.position = CGPoint(x: 0.5 * width + CGFloat(index) * width, y: 0.5 * height)
             dotLayer.cornerRadius = size.height / 2.0
             dotLayer.opacity = 0

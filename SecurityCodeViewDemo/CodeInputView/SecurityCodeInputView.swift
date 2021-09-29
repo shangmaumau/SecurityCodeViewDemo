@@ -106,7 +106,6 @@ final class SecurityCodeInputView: UIView {
         // 错误提示文本
         alertText = UILabel()
         alertText?.font = .systemFont(ofSize: 12, weight: .medium)
-        // rgba(224, 32, 32, 1)
         // rgba(245, 95, 78, 1)
         alertText?.textColor = UIColor(red: 245 / 255.0, green: 95 / 255.0, blue: 78 / 255.0, alpha: 1)
         alertText?.textAlignment = .center
