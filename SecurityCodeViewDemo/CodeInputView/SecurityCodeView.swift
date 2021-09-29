@@ -37,13 +37,13 @@ final class SecurityCodeView: UIView {
         addSubview(bgView)
         addSubview(contentView)
 
-        codeInputView = SecurityCodeInputView(codeCount: 6, frame: CGRect(origin: .zero, size: CGSize(width: 300, height: 215)))
+        codeInputView = SecurityCodeInputView(codeCount: 6, frame: CGRect(origin: .zero, size: CGSize(width: 270, height: 172)))
         codeInputView?.backgroundColor = .white
-        codeInputView?.layer.cornerRadius = 5.0
+        codeInputView?.layer.cornerRadius = 12.0
         contentView.addSubview(codeInputView!)
 
         codeInputView?.snp.makeConstraints({ make in
-            make.size.equalTo(CGSize(width: 300, height: 215))
+            make.size.equalTo(CGSize(width: 270, height: 172))
             make.centerX.equalToSuperview()
             make.centerY.equalToSuperview().offset(-120)
         })

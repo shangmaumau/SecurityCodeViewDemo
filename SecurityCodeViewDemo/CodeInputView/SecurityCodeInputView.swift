@@ -59,9 +59,9 @@ final class SecurityCodeInputView: UIView {
         addSubview(codeView!)
         codeView?.snp.makeConstraints({ make in
             make.centerX.equalToSuperview()
-            make.left.right.equalToSuperview().inset(14)
-            make.centerY.equalToSuperview().offset(20)
-            make.height.equalTo(45)
+            make.left.right.equalToSuperview().inset(25)
+            make.centerY.equalToSuperview()
+            make.height.equalTo(40)
         })
 
         codeView?.setEventCallback({ [weak self] event in
@@ -93,21 +93,22 @@ final class SecurityCodeInputView: UIView {
 
         // 关闭按钮
         closeButton = UIButton()
-        closeButton?.backgroundColor = .cyan
+        closeButton?.setBackgroundImage(UIImage(named: "veh_seccode_close_btn"), for: .normal)
         closeButton?.addTarget(self, action: #selector(_dismissEvent(_:)), for: .touchUpInside)
 
         addSubview(closeButton!)
 
         closeButton?.snp.makeConstraints({ make in
             make.size.equalTo(CGSize(width: 22, height: 22))
-            make.top.left.equalToSuperview().inset(14)
+            make.top.right.equalToSuperview().inset(8)
         })
 
         // 错误提示文本
         alertText = UILabel()
-        alertText?.font = .systemFont(ofSize: 12)
+        alertText?.font = .systemFont(ofSize: 12, weight: .medium)
         // rgba(224, 32, 32, 1)
-        alertText?.textColor = UIColor(red: 224 / 255.0, green: 32 / 255.0, blue: 32 / 255.0, alpha: 1)
+        // rgba(245, 95, 78, 1)
+        alertText?.textColor = UIColor(red: 245 / 255.0, green: 95 / 255.0, blue: 78 / 255.0, alpha: 1)
         alertText?.textAlignment = .center
         alertText?.text = NSLocalizedString("安全码错误，你还可以输入", comment: "")
         alertText?.isHidden = true
@@ -116,13 +117,13 @@ final class SecurityCodeInputView: UIView {
         alertText?.snp.makeConstraints({ make in
             make.height.equalTo(17)
             make.left.right.equalToSuperview().inset(30)
-            make.bottom.equalTo(codeView!.snp.top).offset(-7)
+            make.bottom.equalTo(codeView!.snp.top).offset(-4)
         })
 
         // 标题
         titleText = UILabel()
-        titleText?.textColor = UIColor(red: 24 / 255.0, green: 24 / 255.0, blue: 24 / 255.0, alpha: 1)
-        titleText?.font = .systemFont(ofSize: 16)
+        titleText?.textColor = UIColor(red: 35 / 255.0, green: 41 / 255.0, blue: 52 / 255.0, alpha: 1)
+        titleText?.font = .systemFont(ofSize: 18, weight: .medium)
         titleText?.textAlignment = .center
         titleText?.text = NSLocalizedString("请输入安全码", comment: "")
 
@@ -130,23 +131,24 @@ final class SecurityCodeInputView: UIView {
 
         titleText?.snp.makeConstraints({ make in
             make.left.right.equalToSuperview().inset(30)
-            make.height.equalTo(22)
+            make.height.equalTo(25)
             make.bottom.equalTo(alertText!.snp.top).offset(-5)
         })
 
         // 忘记密码按钮
         forgetCodeButton = UIButton()
+        // rgba(79, 84, 93, 1)
         forgetCodeButton?.setTitleColor(UIColor(red: 153 / 255.0, green: 153 / 255.0, blue: 153 / 255.0, alpha: 1), for: .normal)
-        forgetCodeButton?.titleLabel?.font = .systemFont(ofSize: 16)
+        forgetCodeButton?.titleLabel?.font = .systemFont(ofSize: 14)
         forgetCodeButton?.setTitle(NSLocalizedString("忘记密码？", comment: ""), for: .normal)
 
         addSubview(forgetCodeButton!)
 
         forgetCodeButton?.snp.makeConstraints({ make in
-            make.width.equalTo(100)
+            make.left.right.equalToSuperview().inset(15)
             make.centerX.equalToSuperview()
-            make.height.equalTo(22)
-            make.top.equalTo(codeView!.snp.bottom).offset(28)
+            make.height.equalTo(20)
+            make.top.equalTo(codeView!.snp.bottom).offset(20)
         })
 
         forgetCodeButton?.addTarget(self, action: #selector(_forgetCodeEvent(_:)), for: .touchUpInside)

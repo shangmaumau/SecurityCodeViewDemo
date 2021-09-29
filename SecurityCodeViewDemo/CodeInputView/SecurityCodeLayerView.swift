@@ -47,7 +47,7 @@ final class SecurityCodeLayerView: UIView, UITextFieldDelegate {
     override func layoutSubviews() {
         super.layoutSubviews()
         if !isAdd {
-            _gimmeLayersWith(codeCount: codeCount).forEach { self.layer.addSublayer($0) }
+            _gimmeLayers(of: codeCount).forEach { self.layer.addSublayer($0) }
             isAdd = true
         }
     }
@@ -55,7 +55,7 @@ final class SecurityCodeLayerView: UIView, UITextFieldDelegate {
     /// 变红，输入错误时会调用
     public func turnRed() {
         sublayers.forEach { layer in
-            layer.strokeColor = UIColor(red: 224 / 255.0, green: 32 / 255.0, blue: 32 / 255.0, alpha: 1).cgColor
+            layer.strokeColor = UIColor(red: 245 / 255.0, green: 95 / 255.0, blue: 78 / 255.0, alpha: 1).cgColor
         }
         isRed = true
     }
@@ -63,16 +63,17 @@ final class SecurityCodeLayerView: UIView, UITextFieldDelegate {
     /// 变默认，重新输入时恢复使用
     public func turnDefault() {
         sublayers.forEach { layer in
-            layer.strokeColor = UIColor(red: 151 / 255.0, green: 151 / 255.0, blue: 151 / 255.0, alpha: 1).cgColor
+            // rgba(168, 171, 179, 1)
+            layer.strokeColor = UIColor(red: 168 / 255.0, green: 171 / 255.0, blue: 179 / 255.0, alpha: 1).cgColor
         }
         isRed = false
     }
 
     /// 唤起键盘输入
     public func getUp() {
-        UIView.setAnimationsEnabled(false)
+        // UIView.setAnimationsEnabled(false)
         textField?.becomeFirstResponder()
-        UIView.setAnimationsEnabled(true)
+        // UIView.setAnimationsEnabled(true)
     }
 
     /// 降下键盘
@@ -141,6 +142,34 @@ final class SecurityCodeLayerView: UIView, UITextFieldDelegate {
                 eventCallback?(.done(false))
             }
         }
+    }
+
+    private func _gimmeLayers(of count: Int) -> [CAShapeLayer] {
+        var layers: [CAShapeLayer] = []
+
+        let width = bounds.width / CGFloat(count)
+        let padding: CGFloat = 10
+        for index in 0..<codeCount {
+
+            let linePath = UIBezierPath()
+            let startX = 0.5 * padding + CGFloat(index) * width
+
+            linePath.move(to: CGPoint(x: startX, y: bounds.maxY))
+            linePath.addLine(to: CGPoint(x: startX + width - padding, y: bounds.maxY))
+
+            let lineLayer = CAShapeLayer()
+            lineLayer.path = linePath.cgPath
+            lineLayer.lineWidth = 1
+            lineLayer.fillColor = nil
+            // rgba(168, 171, 179, 1)
+            lineLayer.strokeColor = UIColor(red: 168 / 255.0, green: 171 / 255.0, blue: 179 / 255.0, alpha: 1).cgColor
+
+            layers.append(lineLayer)
+        }
+
+        sublayers = layers
+
+        return layers
     }
 
     private func _gimmeLayersWith(codeCount: Int) -> [CAShapeLayer] {
