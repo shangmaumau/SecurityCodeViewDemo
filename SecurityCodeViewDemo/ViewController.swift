@@ -17,6 +17,7 @@ final class LCodeManager {
 class ViewController: UIViewController {
     var tapButton = UIButton()
     private var mainView: SecurityCodeView?
+    private var alertView: LAlertViewLite?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,8 +40,23 @@ class ViewController: UIViewController {
     }
 
     @objc private func _tapEvent(_ sender: UIButton) {
-        mainView?.showOnView(view, doneCallback: { _ in
+        mainView?.showOnKeyWindow(with: { [weak self] event in
 
+            switch event {
+            case .wrongInputTimeout:
+                self?._showAlert(title: NSLocalizedString("安全码验证已达上限", comment: ""), subtitle: NSLocalizedString("请稍后再试", comment: ""), cancel: NSLocalizedString("得了", comment: ""), set: NSLocalizedString("知道了", comment: ""))
+            default:
+                break
+            }
         })
+    }
+
+    private func _showAlert(title: String?, subtitle: String?, cancel: String?, set: String?) {
+        let alertView = LAlertViewLite(title: title, subtitle: subtitle, cancelTitle: cancel, setTitle: set)
+        alertView.showOnKeyWindow {
+            // cancel
+        } setCallback: {
+            // done
+        }
     }
 }

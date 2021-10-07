@@ -10,6 +10,7 @@
 		9A1ABD952701C56A0033425C /* SecurityCodeDotsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A1ABD942701C56A0033425C /* SecurityCodeDotsView.swift */; };
 		9A1ABD972701C58C0033425C /* SecurityCodeLayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A1ABD962701C58C0033425C /* SecurityCodeLayerView.swift */; };
 		9A1ABD992701C5CF0033425C /* SecurityCodeInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A1ABD982701C5CF0033425C /* SecurityCodeInputView.swift */; };
+		9A4F2EB5270599280082DA85 /* LAlertViewLite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A4F2EB4270599280082DA85 /* LAlertViewLite.swift */; };
 		9A74589F26FC453000D1A6CF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A74589E26FC453000D1A6CF /* AppDelegate.swift */; };
 		9A7458A126FC453000D1A6CF /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A7458A026FC453000D1A6CF /* SceneDelegate.swift */; };
 		9A7458A326FC453000D1A6CF /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A7458A226FC453000D1A6CF /* ViewController.swift */; };
@@ -44,6 +45,7 @@
 		9A1ABD942701C56A0033425C /* SecurityCodeDotsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecurityCodeDotsView.swift; sourceTree = "<group>"; };
 		9A1ABD962701C58C0033425C /* SecurityCodeLayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecurityCodeLayerView.swift; sourceTree = "<group>"; };
 		9A1ABD982701C5CF0033425C /* SecurityCodeInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecurityCodeInputView.swift; sourceTree = "<group>"; };
+		9A4F2EB4270599280082DA85 /* LAlertViewLite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LAlertViewLite.swift; sourceTree = "<group>"; };
 		9A74589B26FC453000D1A6CF /* SecurityCodeViewDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SecurityCodeViewDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9A74589E26FC453000D1A6CF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9A7458A026FC453000D1A6CF /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -99,6 +101,14 @@
 			path = CodeInputView;
 			sourceTree = "<group>";
 		};
+		9A4F2EB3270598D90082DA85 /* LAlertViewLite */ = {
+			isa = PBXGroup;
+			children = (
+				9A4F2EB4270599280082DA85 /* LAlertViewLite.swift */,
+			);
+			path = LAlertViewLite;
+			sourceTree = "<group>";
+		};
 		9A74589226FC453000D1A6CF = {
 			isa = PBXGroup;
 			children = (
@@ -124,6 +134,7 @@
 			children = (
 				9A7458CE26FC463700D1A6CF /* PasswordAlertView.swift */,
 				9A1ABD932701C5510033425C /* CodeInputView */,
+				9A4F2EB3270598D90082DA85 /* LAlertViewLite */,
 				9A74589E26FC453000D1A6CF /* AppDelegate.swift */,
 				9A7458A026FC453000D1A6CF /* SceneDelegate.swift */,
 				9A7458A226FC453000D1A6CF /* ViewController.swift */,
@@ -292,6 +303,7 @@
 				9A1ABD972701C58C0033425C /* SecurityCodeLayerView.swift in Sources */,
 				9A7458CF26FC463700D1A6CF /* PasswordAlertView.swift in Sources */,
 				9A7458A326FC453000D1A6CF /* ViewController.swift in Sources */,
+				9A4F2EB5270599280082DA85 /* LAlertViewLite.swift in Sources */,
 				9AB8E78726FC859D0067BCA1 /* SecurityCodeView.swift in Sources */,
 				9A1ABD992701C5CF0033425C /* SecurityCodeInputView.swift in Sources */,
 				9A1ABD952701C56A0033425C /* SecurityCodeDotsView.swift in Sources */,

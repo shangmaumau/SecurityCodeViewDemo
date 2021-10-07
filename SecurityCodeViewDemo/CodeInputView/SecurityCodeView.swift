@@ -13,9 +13,19 @@ public typealias VoidBlock = () -> Void
 
 /// 安全码全流程处理视图。
 final class SecurityCodeView: UIView {
+    public enum Event {
+        case wrongInputTimeout
+        case forgetCode
+        case dismiss
+        case success
+    }
+
+    public typealias EventBlock = (_ event: Event) -> Void
+
     private var contentView = UIView()
     private var bgView = UIView()
     private var codeInputView: SecurityCodeInputView?
+    private var eventCallback: EventBlock?
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -24,6 +34,10 @@ final class SecurityCodeView: UIView {
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    public func setEventCallback(_ callback: @escaping EventBlock) {
+        eventCallback = callback
     }
 
     private func _addChildViews() {
@@ -49,26 +63,44 @@ final class SecurityCodeView: UIView {
         })
 
         codeInputView?.setEventCallback({ [weak self] event in
-            switch event {
-            case .dismiss:
-                self?.dismiss()
-            case .done:
-                break
-            case .forgetCode:
-                // 跳转页面
-                break
-            case .wrongTimeout:
-                // 展示输入错误过多的提示
-                break
-            }
+            self?._handleInputViewEvent(event)
         })
     }
 
-    public func showOnView(_ view: UIView, doneCallback: @escaping BooleanBlock) {
-        guard let window = view.window else {
+    private func _handleInputViewEvent(_ event: SecurityCodeInputView.Event) {
+        switch event {
+        // 关闭
+        case .dismiss:
+            eventCallback?(.dismiss)
+            dismiss()
+        // 输入完成
+        case let .done(isOkay):
+            // 输入正确
+            if isOkay {
+                eventCallback?(.success)
+                dismiss()
+            } // else 输入失败
+        // 忘记安全码
+        case .forgetCode:
+            eventCallback?(.forgetCode)
+            dismiss()
+        // 输错次数超标
+        case .wrongTimeout:
+            eventCallback?(.wrongInputTimeout)
+            dismiss()
+        }
+    }
+
+    public func showOnKeyWindow(with eventCallback: @escaping EventBlock) {
+        var keyWindow: UIWindow?
+        for window in UIApplication.shared.windows where window.isKeyWindow {
+            keyWindow = window
+        }
+        guard let keyWindow = keyWindow else {
             return
         }
-        window.addSubview(self)
+        keyWindow.addSubview(self)
+        self.eventCallback = eventCallback
 
         let animationOption: UIView.AnimationOptions = .init(rawValue: 7 << 16)
         let bigRect = UIScreen.main.bounds
@@ -78,7 +110,7 @@ final class SecurityCodeView: UIView {
             contentView.frame = bigRect
             bgView.alpha = 1.0
             codeInputView?.getUp()
-    
+
         } completion: { _ in
         }
     }

@@ -73,6 +73,8 @@ final class SecurityCodeLayerView: UIView, UITextFieldDelegate {
     public func getUp() {
         // UIView.setAnimationsEnabled(false)
         textField?.becomeFirstResponder()
+        turnDefault()
+        dotsView?.deleteAll()
         // UIView.setAnimationsEnabled(true)
     }
 
@@ -149,8 +151,7 @@ final class SecurityCodeLayerView: UIView, UITextFieldDelegate {
 
         let width = bounds.width / CGFloat(count)
         let padding: CGFloat = 10
-        for index in 0..<codeCount {
-
+        for index in 0 ..< codeCount {
             let linePath = UIBezierPath()
             let startX = 0.5 * padding + CGFloat(index) * width
 

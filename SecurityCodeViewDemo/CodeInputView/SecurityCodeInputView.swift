@@ -12,13 +12,13 @@ import UIKit
 final class SecurityCodeInputView: UIView {
     /// 视图交互事件
     public enum Event {
-        /// 输入完成（似乎不再需要）
+        /// 输入完成
         case done(Bool)
         /// 关闭页面
         case dismiss
         /// 忘记安全码
         case forgetCode
-        /// 错误超过次数
+        /// 输错次数超标
         case wrongTimeout
     }
 
@@ -39,9 +39,9 @@ final class SecurityCodeInputView: UIView {
     /// 安全码位数
     private var count: Int
     /// 最大的输入次数，超过五次输入错误，则展示达到上限界面
-    private let maxInputTime = 5
+    private let maxInputWrongTime = 3
     /// 输入错误次数
-    private var inputWrongTime: Int = 5
+    private var inputLeftTime: Int = 3
 
     init(codeCount: Int, frame: CGRect) {
         count = codeCount
@@ -71,16 +71,15 @@ final class SecurityCodeInputView: UIView {
             case let .done(isDone):
                 // 输入错误
                 if !isDone {
-                    self.inputWrongTime -= 1
-                    if self.inputWrongTime == .zero {
+                    self.inputLeftTime -= 1
+                    if self.inputLeftTime == .zero {
                         self.eventCallback?(.wrongTimeout)
                         // 处理存疑
                         self.alertText?.isHidden = true
 
                     } else {
-                        let key = NSLocalizedString("安全码错误，你还可以输入", comment: "") + "\(self.inputWrongTime)" + NSLocalizedString("次", comment: "")
+                        let key = NSLocalizedString("安全码错误，你还可以输入", comment: "") + "\(self.inputLeftTime)" + NSLocalizedString("次", comment: "")
                         self.alertText?.text = key
-
                         self.alertText?.isHidden = false
                     }
                 }
@@ -154,9 +153,13 @@ final class SecurityCodeInputView: UIView {
     }
 
     public func getUp() {
+        // 清空
+        // 1. codeView在`getUp()`内部亦会做清空
         codeView?.getUp()
-        codeView?.turnDefault()
-        inputWrongTime = 5
+        // 2. 错误次数提醒隐藏
+        alertText?.isHidden = true
+        // 3. 剩余可输入错误次数置为最大
+        inputLeftTime = maxInputWrongTime
     }
 
     public func getDown() {
