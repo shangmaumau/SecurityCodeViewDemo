@@ -12,7 +12,7 @@ import UIKit
 final class SecurityCodeInputView: UIView {
     /// 视图交互事件
     public enum Event {
-        /// 输入完成
+        /// 输入结束（可能输对也可能输错）
         case done(Bool)
         /// 关闭页面
         case dismiss
@@ -55,11 +55,12 @@ final class SecurityCodeInputView: UIView {
 
     private func _addChildViews() {
         // 安全码输入
-        codeView = SecurityCodeLayerView(frame: .zero, codeCount: 6)
+        let layerConfig = SecurityCodeLayerView.Configuration(count: 6, innerSpace: 10, bottomLineHeight: 1, dotSize: CGSize(width: 10, height: 10), isShowCodeBlinkly: false)
+        codeView = SecurityCodeLayerView(frame: .zero, config: layerConfig)
         addSubview(codeView!)
         codeView?.snp.makeConstraints({ make in
             make.centerX.equalToSuperview()
-            make.left.right.equalToSuperview().inset(25)
+            make.left.right.equalToSuperview().inset(32)
             make.centerY.equalToSuperview()
             make.height.equalTo(40)
         })

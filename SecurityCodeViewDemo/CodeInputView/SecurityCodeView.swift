@@ -5,8 +5,8 @@
 //  Created by suxiangnan on 2021/9/23.
 //
 
-import SnapKit
 import UIKit
+import SnapKit
 
 public typealias BooleanBlock = (_ isDone: Bool) -> Void
 public typealias VoidBlock = () -> Void

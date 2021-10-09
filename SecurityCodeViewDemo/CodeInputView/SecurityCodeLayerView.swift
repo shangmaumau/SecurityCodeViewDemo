@@ -8,8 +8,26 @@
 import SnapKit
 import UIKit
 
+public struct SecurityCodeLayerConfiguration {
+}
+
 /// 安全码线点视图。
 final class SecurityCodeLayerView: UIView, UITextFieldDelegate {
+    /// 配置项
+    public struct Configuration {
+        /// 安全码数字个数，默认 6 个
+        public var count: Int = 6
+        /// 底线的间距（底线宽度会自适应：
+        /// `(width - (count - 1) * innerSpace) / count`）
+        public var innerSpace: CGFloat
+        /// 底线的高度，默认为 1
+        public var bottomLineHeight: CGFloat = 1.0
+        /// 黑圆点的尺寸，默认长宽为 10
+        public var dotSize: CGSize = CGSize(width: 10, height: 10)
+        /// 短暂展示输入的数字，默认不展示
+        public var isShowCodeBlinkly: Bool = false
+    }
+
     public enum Event {
         case done(Bool)
         case beginEditing
@@ -31,11 +49,12 @@ final class SecurityCodeLayerView: UIView, UITextFieldDelegate {
     private var isNeedFreeze = false
     /// 事件回调
     private var eventCallback: EventBlock?
-    /// 安全码数字的个数。一般为 6 个或 4 个。
-    public private(set) var codeCount: Int
-
-    init(frame: CGRect, codeCount: Int) {
-        self.codeCount = codeCount
+    public private(set) var config: Configuration
+    private var codeCount: CGFloat {
+        CGFloat(config.count)
+    }
+    init(frame: CGRect, config: Configuration) {
+        self.config = config
         super.init(frame: frame)
         _addChildViews()
     }
@@ -47,7 +66,7 @@ final class SecurityCodeLayerView: UIView, UITextFieldDelegate {
     override func layoutSubviews() {
         super.layoutSubviews()
         if !isAdd {
-            _gimmeLayers(of: codeCount).forEach { self.layer.addSublayer($0) }
+            _gimmeLayers().forEach { self.layer.addSublayer($0) }
             isAdd = true
         }
     }
@@ -100,7 +119,8 @@ final class SecurityCodeLayerView: UIView, UITextFieldDelegate {
 
         addSubview(textField!)
 
-        dotsView = SecurityCodeDotsView(count: codeCount, frame: bounds)
+        let dotConfig = SecurityCodeDotsView.Configuration(count: config.count, innerSpace: config.innerSpace, dotSize: config.dotSize, isShowCodeBlinkly: config.isShowCodeBlinkly)
+        dotsView = SecurityCodeDotsView(frame: bounds, config: dotConfig)
         addSubview(dotsView!)
 
         textField?.snp.makeConstraints({ make in
@@ -117,7 +137,7 @@ final class SecurityCodeLayerView: UIView, UITextFieldDelegate {
         // 1.与正确的安全码比较，安全匹配则隐藏
         // 2.不匹配则显示输入错误，清空textfield
         if let textCount = textField?.text?.count,
-           textCount == codeCount {
+           textCount == config.count {
             // 输入正确
             if textField?.text! == LCodeManager.shared.securityCode {
                 // 隐藏键盘
@@ -135,7 +155,8 @@ final class SecurityCodeLayerView: UIView, UITextFieldDelegate {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) { [weak self] in
                     self?.dotsView?.deleteAll()
                 }
-                // 冷冻一会儿，可以防止用户快速点击
+                // 冷冻一会儿，防止用户输入过快，导致错误提醒出现的时候，
+                // 又出现了输入一两位的情况
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
                     [weak self] in
                     self?.isNeedFreeze = false
@@ -146,21 +167,21 @@ final class SecurityCodeLayerView: UIView, UITextFieldDelegate {
         }
     }
 
-    private func _gimmeLayers(of count: Int) -> [CAShapeLayer] {
+    private func _gimmeLayers() -> [CAShapeLayer] {
         var layers: [CAShapeLayer] = []
 
-        let width = bounds.width / CGFloat(count)
-        let padding: CGFloat = 10
-        for index in 0 ..< codeCount {
+        let lineWidth = (bounds.width - (codeCount - 1) * config.innerSpace) / codeCount
+        let padding = config.innerSpace
+        for index in 0 ..< config.count {
             let linePath = UIBezierPath()
-            let startX = 0.5 * padding + CGFloat(index) * width
+            let startX = CGFloat(index) * (lineWidth + padding)
 
             linePath.move(to: CGPoint(x: startX, y: bounds.maxY))
-            linePath.addLine(to: CGPoint(x: startX + width - padding, y: bounds.maxY))
+            linePath.addLine(to: CGPoint(x: startX + lineWidth, y: bounds.maxY))
 
             let lineLayer = CAShapeLayer()
             lineLayer.path = linePath.cgPath
-            lineLayer.lineWidth = 1
+            lineLayer.lineWidth = config.bottomLineHeight
             lineLayer.fillColor = nil
             // rgba(168, 171, 179, 1)
             lineLayer.strokeColor = UIColor(red: 168 / 255.0, green: 171 / 255.0, blue: 179 / 255.0, alpha: 1).cgColor
@@ -173,6 +194,10 @@ final class SecurityCodeLayerView: UIView, UITextFieldDelegate {
         return layers
     }
 
+    /**
+     下面方法的代码无用了
+     本来是圈线
+     */
     private func _gimmeLayersWith(codeCount: Int) -> [CAShapeLayer] {
         var layers: [CAShapeLayer] = []
 
@@ -235,7 +260,7 @@ final class SecurityCodeLayerView: UIView, UITextFieldDelegate {
             return true
         }
         // 输入超过限制时，不再让输入
-        if let textCount = textField.text?.count, textCount >= codeCount {
+        if let textCount = textField.text?.count, textCount >= config.count {
             return false
         }
 

@@ -9,17 +9,25 @@ import UIKit
 
 /// 安全码点视图。
 final class SecurityCodeDotsView: UIView {
-    /// 点的数量
-    public private(set) var count: Int
+    
+    public struct Configuration {
+        public var count: Int
+        public var innerSpace: CGFloat
+        public var dotSize: CGSize
+        public var isShowCodeBlinkly: Bool = false
+    }
     /// 点图层数组
     private var dotLayers: [CALayer] = []
     /// 当前索引位置，-1 表示未输入任何数。
     private var currentIndex: Int = -1
     /// 标记位，图层是否已经添加
     private var isAdd: Bool = false
-
-    init(count: Int, frame: CGRect) {
-        self.count = count
+    private var config: Configuration
+    private var codeCount: CGFloat {
+        CGFloat(config.count)
+    }
+    init(frame: CGRect, config: Configuration) {
+        self.config = config
         super.init(frame: frame)
     }
 
@@ -32,15 +40,23 @@ final class SecurityCodeDotsView: UIView {
     }
 
     private func _addChildLayers() {
-        let width = frame.width / CGFloat(count)
-        let height = frame.height
-        let size = CGSize(width: 10, height: 10)
-        for index in 0 ..< count {
+        var size = config.dotSize
+        let unitWidth = (bounds.width - (codeCount - 1) * config.innerSpace) / codeCount
+        let biggerWidth = unitWidth + config.innerSpace
+        let unitHeight = bounds.height
+        // 如果设定的size大于每个dot占据的长宽，则削足适履
+        if size.width > unitWidth.rounded(.down) {
+            size.width = unitWidth.rounded(.down)
+        }
+        if size.height > unitHeight.rounded(.down) {
+            size.height = unitHeight.rounded(.down)
+        }
+        for index in 0 ..< config.count {
             let dotLayer = CALayer()
             dotLayer.bounds = CGRect(origin: .zero, size: size)
             // rgba(35, 41, 52, 1)
             dotLayer.backgroundColor = UIColor(red: 35 / 255.0, green: 41 / 255.0, blue: 52 / 255.0, alpha: 1).cgColor
-            dotLayer.position = CGPoint(x: 0.5 * width + CGFloat(index) * width, y: 0.5 * height)
+            dotLayer.position = CGPoint(x: 0.5 * unitWidth + CGFloat(index) * biggerWidth, y: 0.5 * unitHeight)
             dotLayer.cornerRadius = size.height / 2.0
             dotLayer.opacity = 0
             dotLayers.append(dotLayer)
@@ -86,7 +102,7 @@ final class SecurityCodeDotsView: UIView {
     }
 
     private func _isInRange(_ index: Int) -> Bool {
-        if index >= -1 && index < count {
+        if index >= -1 && index < config.count {
             return true
         }
         return false
