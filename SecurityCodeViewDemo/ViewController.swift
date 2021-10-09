@@ -5,8 +5,8 @@
 //  Created by suxiangnan on 2021/9/23.
 //
 
-import SnapKit
 import UIKit
+import SnapKit
 
 final class LCodeManager {
     static let shared = LCodeManager()
@@ -14,10 +14,17 @@ final class LCodeManager {
     public var securityCode: String = ""
 }
 
+public enum TestPart {
+    case popSecurityCode
+    case presentSecurityCode
+}
+
 class ViewController: UIViewController {
     var tapButton = UIButton()
     private var mainView: SecurityCodeView?
     private var alertView: LAlertViewLite?
+
+    private var testPart: TestPart = .popSecurityCode
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,15 +47,24 @@ class ViewController: UIViewController {
     }
 
     @objc private func _tapEvent(_ sender: UIButton) {
-        mainView?.showOnKeyWindow(with: { [weak self] event in
+        switch testPart {
+        case .popSecurityCode:
+            mainView?.showOnKeyWindow(with: { [weak self] event in
 
-            switch event {
-            case .wrongInputTimeout:
-                self?._showAlert(title: NSLocalizedString("安全码验证已达上限", comment: ""), subtitle: NSLocalizedString("请稍后再试", comment: ""), cancel: NSLocalizedString("得了", comment: ""), set: NSLocalizedString("知道了", comment: ""))
-            default:
-                break
-            }
-        })
+                switch event {
+                case .wrongInputTimeout:
+                    self?._showAlert(title: NSLocalizedString("安全码验证已达上限", comment: ""), subtitle: NSLocalizedString("请稍后再试", comment: ""), cancel: NSLocalizedString("得了", comment: ""), set: NSLocalizedString("知道了", comment: ""))
+                default:
+                    break
+                }
+            })
+
+        case .presentSecurityCode:
+            present(LSetSecurityCodeVC(), animated: true, completion: nil)
+
+        default:
+            break
+        }
     }
 
     private func _showAlert(title: String?, subtitle: String?, cancel: String?, set: String?) {

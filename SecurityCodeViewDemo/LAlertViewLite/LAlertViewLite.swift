@@ -5,8 +5,8 @@
 //  Created by suxiangnan on 2021/9/30.
 //
 
-import SnapKit
 import UIKit
+import SnapKit
 
 private typealias _LAlertVoidBlock = () -> Void
 

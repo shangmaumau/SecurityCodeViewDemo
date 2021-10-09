@@ -9,23 +9,30 @@ import UIKit
 
 /// 安全码点视图。
 final class SecurityCodeDotsView: UIView {
-    
     public struct Configuration {
         public var count: Int
         public var innerSpace: CGFloat
         public var dotSize: CGSize
         public var isShowCodeBlinkly: Bool = false
     }
+
     /// 点图层数组
     private var dotLayers: [CALayer] = []
+    /// 底下的数字
+    private var dotLabels: [UILabel] = []
     /// 当前索引位置，-1 表示未输入任何数。
     private var currentIndex: Int = -1
     /// 标记位，图层是否已经添加
     private var isAdd: Bool = false
+    /// 配置项
     private var config: Configuration
+    /// 密码位数
     private var codeCount: CGFloat {
         CGFloat(config.count)
     }
+
+    private var lastWorkItem: DispatchWorkItem?
+
     init(frame: CGRect, config: Configuration) {
         self.config = config
         super.init(frame: frame)
@@ -59,8 +66,21 @@ final class SecurityCodeDotsView: UIView {
             dotLayer.position = CGPoint(x: 0.5 * unitWidth + CGFloat(index) * biggerWidth, y: 0.5 * unitHeight)
             dotLayer.cornerRadius = size.height / 2.0
             dotLayer.opacity = 0
-            dotLayers.append(dotLayer)
+
             layer.addSublayer(dotLayer)
+            dotLayers.append(dotLayer)
+
+            if config.isShowCodeBlinkly {
+                let label = UILabel()
+                label.font = .systemFont(ofSize: 36, weight: .bold)
+                label.textColor = UIColor(red: 24 / 255.0, green: 24 / 255.0, blue: 24 / 255.0, alpha: 1)
+                label.textAlignment = .center
+                label.bounds = CGRect(origin: .zero, size: CGSize(width: unitWidth, height: unitHeight))
+                label.center = dotLayer.position
+
+                addSubview(label)
+                dotLabels.append(label)
+            }
         }
     }
 
@@ -69,14 +89,35 @@ final class SecurityCodeDotsView: UIView {
     }
 
     /// 添加一个点
-    public func addDot() {
+    public func addDot(_ text: String) {
         guard _isInRange(currentIndex) else {
             return
         }
         // 先加index，再变对应的为不透明
         currentIndex += 1
-        UIView.animate(withDuration: 0.2) { [unowned self] in
-            dotLayers[currentIndex].opacity = 1.0
+
+        // block中捕获的值，如果此处不另复制值，则会跟随currentIndex的值而变化
+        // 这样在延时之后，获得到的就成了新值而非期望的旧值
+        let cindex = currentIndex
+        if config.isShowCodeBlinkly {
+            dotLabels[cindex].alpha = 1.0
+            dotLabels[cindex].text = text
+
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.15) {
+                UIView.animate(withDuration: 0.2, delay: 0, options: .init(rawValue: 7 << 16)) { [unowned self] in
+
+                    dotLabels[cindex].alpha = 0.0
+                    dotLabels[cindex].text = ""
+                    dotLayers[cindex].opacity = 1.0
+
+                } completion: { _ in
+                }
+            }
+
+        } else {
+            UIView.animate(withDuration: 0.2) { [unowned self] in
+                dotLayers[cindex].opacity = 1.0
+            }
         }
     }
 

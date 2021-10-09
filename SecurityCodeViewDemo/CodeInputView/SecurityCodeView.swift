@@ -14,9 +14,13 @@ public typealias VoidBlock = () -> Void
 /// 安全码全流程处理视图。
 final class SecurityCodeView: UIView {
     public enum Event {
+        /// 输入错误次数过多
         case wrongInputTimeout
+        /// 忘记密码
         case forgetCode
+        /// 关闭页面
         case dismiss
+        /// 成功
         case success
     }
 
@@ -76,7 +80,7 @@ final class SecurityCodeView: UIView {
         // 输入完成
         case let .done(isOkay):
             // 输入正确
-            if isOkay {
+            if isOkay == true {
                 eventCallback?(.success)
                 dismiss()
             } // else 输入失败
@@ -123,7 +127,6 @@ final class SecurityCodeView: UIView {
 
             contentView.frame = CGRect(origin: CGPoint(x: 0, y: bigRect.maxY), size: bigRect.size)
             bgView.alpha = 0
-
             codeInputView?.getDown()
 
         } completion: { [unowned self] _ in

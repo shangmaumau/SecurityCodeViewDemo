@@ -5,11 +5,8 @@
 //  Created by suxiangnan on 2021/9/27.
 //
 
-import SnapKit
 import UIKit
-
-public struct SecurityCodeLayerConfiguration {
-}
+import SnapKit
 
 /// 安全码线点视图。
 final class SecurityCodeLayerView: UIView, UITextFieldDelegate {
@@ -26,10 +23,14 @@ final class SecurityCodeLayerView: UIView, UITextFieldDelegate {
         public var dotSize: CGSize = CGSize(width: 10, height: 10)
         /// 短暂展示输入的数字，默认不展示
         public var isShowCodeBlinkly: Bool = false
+        /// 是否需要检查输入的正确性，默认不需要
+        public var isNeedCheck: Bool = false
+        /// 正确的码，默认为空
+        public var correctCode: String = ""
     }
 
     public enum Event {
-        case done(Bool)
+        case done(Bool?)
         case beginEditing
     }
 
@@ -49,10 +50,13 @@ final class SecurityCodeLayerView: UIView, UITextFieldDelegate {
     private var isNeedFreeze = false
     /// 事件回调
     private var eventCallback: EventBlock?
+    /// 配置项
     public private(set) var config: Configuration
+    /// 密码位数
     private var codeCount: CGFloat {
         CGFloat(config.count)
     }
+
     init(frame: CGRect, config: Configuration) {
         self.config = config
         super.init(frame: frame)
@@ -133,36 +137,42 @@ final class SecurityCodeLayerView: UIView, UITextFieldDelegate {
     }
 
     @objc private func _textFieldDidChangeValue(_ textField: UITextField?) {
-        // 拿到六位数字后
-        // 1.与正确的安全码比较，安全匹配则隐藏
-        // 2.不匹配则显示输入错误，清空textfield
         if let textCount = textField?.text?.count,
            textCount == config.count {
-            // 输入正确
-            if textField?.text! == LCodeManager.shared.securityCode {
-                // 隐藏键盘
-                textField?.resignFirstResponder()
-                // 回调告诉父视图我输入正确了
-                eventCallback?(.done(true))
-            }
-            // 输入错误
-            else {
-                self.textField?.text = ""
-                turnRed()
+            if config.isNeedCheck {
+                // 拿到足够的数字后
+                // 1.与正确的密码比较，完全匹配则隐藏
+                // 2.不匹配则显示输入错误，清空textfield
 
-                isNeedFreeze = true
-                // 延时清除，否则会导致最后一位输入的无法显示
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) { [weak self] in
-                    self?.dotsView?.deleteAll()
+                // 输入正确
+                if textField?.text! == config.correctCode {
+                    // 隐藏键盘
+                    textField?.resignFirstResponder()
+                    // 回调告诉父视图我输入正确了
+                    eventCallback?(.done(true))
                 }
-                // 冷冻一会儿，防止用户输入过快，导致错误提醒出现的时候，
-                // 又出现了输入一两位的情况
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-                    [weak self] in
-                    self?.isNeedFreeze = false
+                // 输入错误
+                else {
+                    self.textField?.text = ""
+                    turnRed()
+
+                    isNeedFreeze = true
+                    // 延时清除，否则会导致最后一位输入的无法显示
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) { [weak self] in
+                        self?.dotsView?.deleteAll()
+                    }
+                    // 冷冻一会儿，防止用户输入过快，导致错误提醒出现的时候，
+                    // 又出现了输入一两位的情况
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                        [weak self] in
+                        self?.isNeedFreeze = false
+                    }
+                    // 回调告诉父视图我输入错误了
+                    eventCallback?(.done(false))
                 }
-                // 回调告诉父视图我输入错误了
-                eventCallback?(.done(false))
+            } else {
+                // textField?.resignFirstResponder()
+                eventCallback?(.done(nil))
             }
         }
     }
@@ -264,7 +274,7 @@ final class SecurityCodeLayerView: UIView, UITextFieldDelegate {
             return false
         }
 
-        dotsView?.addDot()
+        dotsView?.addDot(string)
         return true
     }
 }

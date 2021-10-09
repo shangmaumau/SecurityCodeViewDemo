@@ -5,15 +5,15 @@
 //  Created by suxiangnan on 2021/9/27.
 //
 
-import SnapKit
 import UIKit
+import SnapKit
 
 /// 安全码输入界面。
 final class SecurityCodeInputView: UIView {
     /// 视图交互事件
     public enum Event {
         /// 输入结束（可能输对也可能输错）
-        case done(Bool)
+        case done(Bool?)
         /// 关闭页面
         case dismiss
         /// 忘记安全码
@@ -55,7 +55,7 @@ final class SecurityCodeInputView: UIView {
 
     private func _addChildViews() {
         // 安全码输入
-        let layerConfig = SecurityCodeLayerView.Configuration(count: 6, innerSpace: 10, bottomLineHeight: 1, dotSize: CGSize(width: 10, height: 10), isShowCodeBlinkly: false)
+        let layerConfig = SecurityCodeLayerView.Configuration(count: 6, innerSpace: 10, bottomLineHeight: 1, dotSize: CGSize(width: 10, height: 10), isShowCodeBlinkly: false, isNeedCheck: true, correctCode: LCodeManager.shared.securityCode)
         codeView = SecurityCodeLayerView(frame: .zero, config: layerConfig)
         addSubview(codeView!)
         codeView?.snp.makeConstraints({ make in
@@ -71,7 +71,7 @@ final class SecurityCodeInputView: UIView {
             switch event {
             case let .done(isDone):
                 // 输入错误
-                if !isDone {
+                if isDone == false {
                     self.inputLeftTime -= 1
                     if self.inputLeftTime == .zero {
                         self.eventCallback?(.wrongTimeout)
