@@ -137,9 +137,9 @@ private class _LAlertViewMain: UIView {
             })
         }
 
-        // 按钮宽度
+        /// 按钮宽度
         let buttonWidth: CGFloat
-        // 是否要添加竖直分隔线
+        /// 是否要添加竖直分隔线
         let needAddVLine: Bool
         if setTitle != nil && cancelTitle != nil {
             buttonWidth = _Size.width / 2.0
@@ -148,8 +148,17 @@ private class _LAlertViewMain: UIView {
             buttonWidth = _Size.width
             needAddVLine = false
         }
-
+        /// 是否要添加“取消”按钮
+        var needAddCancel: Bool = false
+        if cancelTitle == nil && setTitle == nil {
+            needAddCancel = true
+            cancelTitle = NSLocalizedString("取消", comment: "")
+        }
         if cancelTitle != nil {
+            needAddCancel = true
+        }
+
+        if needAddCancel {
             cancelButton = UIButton()
             cancelButton?.setTitle(cancelTitle, for: .normal)
             cancelButton?.titleLabel?.font = .systemFont(ofSize: 16)
@@ -214,13 +223,13 @@ private class _LAlertViewMain: UIView {
 /**
  简易版的警告视图。
 
- 分上下两部分，上部分有标题和副标题；下部分左边取消按钮，右边去往具体的业务界面，
- 标题可自定义。
+ 分上下两部分，上部分有标题和副标题，下部分左边取消按钮，右边去往具体的业务界面；
+ 四个标题可自定义。
 
- 上部分如无副标题，标题会在标题视图的中央。
+ 标题和副标题均可支持多行文本展示。
 
- 下部分如只有一个按钮，则占用整个底部空间。具体回调看使用哪个回调。
- 如下部分不传任何按钮标题，则仍会有一个默认的取消按钮。
+ 下部分如只有一个按钮，则占用整个底部空间。
+ 如下部分不传任何按钮标题，则会有一个默认的取消按钮。
  */
 final class LAlertViewLite: UIView {
     private var _alertView: _LAlertViewMain?
@@ -229,6 +238,8 @@ final class LAlertViewLite: UIView {
 
     private var _cancelCallback: _LAlertVoidBlock?
     private var _setCallback: _LAlertVoidBlock?
+    /// 点击外部以清除弹窗。默认 `false`，即不启用。
+    public var touchOutsideToDismiss: Bool = false
 
     init(title: String?, subtitle: String?, cancelTitle: String?, setTitle: String?) {
         let bigRect = UIScreen.main.bounds
@@ -251,10 +262,19 @@ final class LAlertViewLite: UIView {
             make.center.equalToSuperview()
             make.size.equalTo(_LAlertViewMain.csize)
         })
+
+        let touchGesture = UITapGestureRecognizer(target: self, action: #selector(_bgViewTapEvent(_:)))
+        _bgView?.addGestureRecognizer(touchGesture)
     }
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    @objc private func _bgViewTapEvent(_ sender: UIGestureRecognizer?) {
+        if touchOutsideToDismiss {
+            dismiss()
+        }
     }
 
     public func showOnKeyWindow(with cancelCallback: (() -> Void)?, setCallback: (() -> Void)?) {
