@@ -49,7 +49,6 @@ public class SharedCountdownTimer {
     }
 
     @objc private func _timerSelector() {
-        decreaseSeconds -= 1
         let isTimeup = decreaseSeconds == .zero
         timerCallback?(isTimeup, decreaseSeconds)
         if isTimeup {
@@ -57,6 +56,7 @@ public class SharedCountdownTimer {
             timer = nil
             timerProxy = nil
         }
+        decreaseSeconds -= 1
     }
 }
 

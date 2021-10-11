@@ -5,8 +5,8 @@
 //  Created by suxiangnan on 2021/10/9.
 //
 
-import SnapKit
 import UIKit
+import SnapKit
 
 /// 设置安全码
 final class LSetSecurityCodeVC: UIViewController {
@@ -179,7 +179,7 @@ final class LVerifyMobilePhoneNumberVC: UIViewController {
         dotsView?.config.correctCode = "961030"
         _fireCountdownTimer()
     }
-    
+
     private func _restoreCountdownTimer() {
         if SharedCountdownTimer.shared.isRunning {
             _fireCountdownTimer()

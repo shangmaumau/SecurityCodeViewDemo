@@ -46,7 +46,7 @@ class PasswordAlertView: UIView, UITextFieldDelegate {
 //        grayCloseIcon@2x
         let closeButton = UIButton(type: .custom)
         closeButton.backgroundColor = .cyan
-        closeButton.setBackgroundImage(UIImage(named:"grayCloseIcon"), for: .normal)
+        closeButton.setBackgroundImage(UIImage(named: "grayCloseIcon"), for: .normal)
         closeButton.addTarget(self, action: #selector(cancel(sender:)), for: .touchUpInside)
         bgView.addSubview(closeButton)
         closeButton.snp.makeConstraints { make in
