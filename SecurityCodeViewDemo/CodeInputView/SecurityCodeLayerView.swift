@@ -51,7 +51,7 @@ final class SecurityCodeLayerView: UIView, UITextFieldDelegate {
     /// 事件回调
     private var eventCallback: EventBlock?
     /// 配置项
-    public private(set) var config: Configuration
+    public var config: Configuration
     /// 密码位数
     private var codeCount: CGFloat {
         CGFloat(config.count)

@@ -12,7 +12,7 @@ import SnapKit
 final class SecurityCodeInputView: UIView {
     /// 视图交互事件
     public enum Event {
-        /// 输入结束（可能输对也可能输错）
+        /// 输入结束（输入正确，输入错误，不计较输入结果）
         case done(Bool?)
         /// 关闭页面
         case dismiss

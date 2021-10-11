@@ -17,6 +17,7 @@ final class LCodeManager {
 public enum TestPart {
     case popSecurityCode
     case presentSecurityCode
+    case pushSecurityCode
 }
 
 class ViewController: UIViewController {
@@ -24,11 +25,13 @@ class ViewController: UIViewController {
     private var mainView: SecurityCodeView?
     private var alertView: LAlertViewLite?
 
-    private var testPart: TestPart = .popSecurityCode
+    private var testPart: TestPart = .pushSecurityCode
 
     override func viewDidLoad() {
         super.viewDidLoad()
         _addChildViews()
+        title = NSLocalizedString("Main View", comment: "")
+        view.backgroundColor = .white
 
         LCodeManager.shared.securityCode = "961030"
     }
@@ -60,10 +63,10 @@ class ViewController: UIViewController {
             })
 
         case .presentSecurityCode:
-            present(LSetSecurityCodeVC(), animated: true, completion: nil)
+            present(LVerifyMobilePhoneNumberVC(), animated: true, completion: nil)
 
-        default:
-            break
+        case .pushSecurityCode:
+            navigationController?.pushViewController(LVerifyMobilePhoneNumberVC(), animated: true)
         }
     }
 
