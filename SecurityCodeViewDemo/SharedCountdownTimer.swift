@@ -16,7 +16,9 @@ public class SharedCountdownTimer {
 
     public var countdownSeconds: TimeInterval = 10 {
         didSet {
-            decreaseSeconds = countdownSeconds
+            if !isRunning {
+                _resetLeftSeconds()
+            }
         }
     }
 
@@ -27,12 +29,11 @@ public class SharedCountdownTimer {
     private var decreaseSeconds: TimeInterval = .zero
 
     private var timer: Timer?
-    private var timerProxy: TimerProxy?
     private var timerCallback: ((_ isEnd: Bool, _ leftSeconds: TimeInterval) -> Void)?
 
     private func realInit() {
-        timerProxy = TimerProxy(with: self, selector: #selector(_timerSelector))
-        timer = Timer(timeInterval: 1, target: timerProxy!, selector: #selector(timerProxy!.executeSelector), userInfo: nil, repeats: true)
+        let timerProxy = TimerProxy(with: self, selector: #selector(_timerSelector))
+        timer = Timer(timeInterval: 1, target: timerProxy, selector: #selector(timerProxy.executeSelector), userInfo: nil, repeats: true)
         RunLoop.current.add(timer!, forMode: .common)
     }
 
@@ -40,9 +41,9 @@ public class SharedCountdownTimer {
         if timer == nil {
             realInit()
         }
-        // 新跑起来，时间重置
+        // new fire, reset left seconds.
         if !isRunning {
-            decreaseSeconds = countdownSeconds
+            _resetLeftSeconds()
         }
         timer?.fire()
         timerCallback = callback
@@ -51,12 +52,16 @@ public class SharedCountdownTimer {
     @objc private func _timerSelector() {
         let isTimeup = decreaseSeconds == .zero
         timerCallback?(isTimeup, decreaseSeconds)
+        decreaseSeconds -= 1
+
         if isTimeup {
             timer?.invalidate()
             timer = nil
-            timerProxy = nil
         }
-        decreaseSeconds -= 1
+    }
+
+    private func _resetLeftSeconds() {
+        decreaseSeconds = countdownSeconds
     }
 }
 
