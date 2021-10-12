@@ -53,7 +53,6 @@ class ViewController: UIViewController {
         switch testPart {
         case .popSecurityCode:
             mainView?.showOnKeyWindow(with: { [weak self] event in
-
                 switch event {
                 case .wrongInputTimeout:
                     self?._showAlert(title: NSLocalizedString("安全码验证已达上限", comment: ""), subtitle: NSLocalizedString("请稍后再试", comment: ""), cancel: NSLocalizedString("得了", comment: ""), set: NSLocalizedString("知道了", comment: ""))

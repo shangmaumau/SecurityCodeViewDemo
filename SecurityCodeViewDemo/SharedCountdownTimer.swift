@@ -49,6 +49,12 @@ public class SharedCountdownTimer {
         timerCallback = callback
     }
 
+    public func shutdown() {
+        timer?.invalidate()
+        timer = nil
+        decreaseSeconds = .zero
+    }
+
     @objc private func _timerSelector() {
         let isTimeup = decreaseSeconds == .zero
         timerCallback?(isTimeup, decreaseSeconds)

@@ -56,6 +56,7 @@ final class LSetSecurityCodeVC: UIViewController {
             case .done:
                 debugPrint("输入完成")
                 self?.dotsView?.getDown()
+                self?.navigationController?.popToRootViewController(animated: true)
                 break
             default:
                 break
@@ -139,6 +140,7 @@ final class LVerifyMobilePhoneNumberVC: UIViewController {
                 if isCorrect == true {
                     self?.dotsView?.getDown()
                     self?._pushToSetSecurityCodeVC()
+                    SharedCountdownTimer.shared.shutdown()
                 }
 
             default:
