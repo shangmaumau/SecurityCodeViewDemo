@@ -144,9 +144,7 @@ final class LCodeLayerView: UIView, UITextFieldDelegate {
                 // 拿到足够的数字后：
                 // 1. 与正确的密码比较，完全匹配则隐藏；
                 // 2. 不匹配则显示输入错误，清空textfield。
-                
                 do {
-                    
                     try config.checkService?.checkCode(inText, completionHandler: { isCorrect in
                         // 输入正确
                         if isCorrect {
@@ -159,7 +157,7 @@ final class LCodeLayerView: UIView, UITextFieldDelegate {
                         else {
                             self.textField?.text = ""
                             turnRed()
-                            
+
                             isNeedFreeze = true
                             // 延时清除，否则会导致最后一位输入的无法显示。
                             DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) { [weak self] in
