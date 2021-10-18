@@ -96,7 +96,7 @@ final class LCodeDotsView: UIView {
         // 先加index，再变对应的为不透明。
         currentIndex += 1
 
-        // block中捕获的值，如果此处不另复制值，则会跟随currentIndex的值而变化，
+        // block中捕获的值是引用类型，如果此处不另复制值，则会跟随currentIndex的值而变化，
         // 这样在延时之后，获得到的就成了新值而非期望的旧值。
         let cindex = currentIndex
         if config.isShowCodeBlinkly {
