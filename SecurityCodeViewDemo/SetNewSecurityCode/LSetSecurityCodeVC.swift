@@ -13,7 +13,7 @@ final class LSetSecurityCodeVC: UIViewController {
     private var titleText: UILabel?
     private var subtitleText: UILabel?
     private var promptText: UILabel?
-    private var dotsView: SecurityCodeLayerView?
+    private var dotsView: LCodeLayerView?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -47,9 +47,8 @@ final class LSetSecurityCodeVC: UIViewController {
             make.height.equalTo(20)
             make.top.equalTo(titleText!.snp.bottom).offset(10)
         })
-
-        let layerConfig = SecurityCodeLayerView.Configuration(count: 6, innerSpace: 15, bottomLineHeight: 1, dotSize: CGSize(width: 15, height: 15), isShowCodeBlinkly: true)
-        dotsView = SecurityCodeLayerView(frame: .zero, config: layerConfig)
+        let layerConfig = LCodeLayerView.Configuration(count: 6, innerSpace: 15, bottomLineHeight: 1, dotSize: CGSize(width: 15, height: 15), isShowCodeBlinkly: true)
+        dotsView = LCodeLayerView(frame: .zero, config: layerConfig)
 
         dotsView?.setEventCallback({ [weak self] event in
             switch event {
@@ -74,13 +73,24 @@ final class LSetSecurityCodeVC: UIViewController {
     }
 }
 
+private struct LVerifyMobileCheckService: LCodeCheckService {
+    var correctCode: String?
+    func checkCode(_ code: String, completionHandler: (Bool) -> Void) throws {
+        if code == correctCode {
+            completionHandler(true)
+        } else {
+            completionHandler(false)
+        }
+    }
+}
+
 /// 验证手机号
 final class LVerifyMobilePhoneNumberVC: UIViewController {
     private var titleText: UILabel?
     private var subtitleText: UILabel?
     private var promptText: UILabel?
     private var resendButton: UIButton?
-    private var dotsView: SecurityCodeLayerView?
+    private var dotsView: LCodeLayerView?
 
     private var keyboardHeight: CGFloat = 100
 
@@ -131,8 +141,10 @@ final class LVerifyMobilePhoneNumberVC: UIViewController {
             make.top.equalTo(titleText!.snp.bottom).offset(10)
         })
 
-        let layerConfig = SecurityCodeLayerView.Configuration(count: 6, innerSpace: 15, bottomLineHeight: 1, dotSize: CGSize(width: 15, height: 15), isShowCodeBlinkly: false, isNeedCheck: true, correctCode: "961030")
-        dotsView = SecurityCodeLayerView(frame: .zero, config: layerConfig)
+        var checkService = LVerifyMobileCheckService()
+        checkService.correctCode = "961030"
+        let layerConfig = LCodeLayerView.Configuration(count: 6, innerSpace: 15, bottomLineHeight: 1, dotSize: CGSize(width: 15, height: 15), isShowCodeBlinkly: false, isNeedCheck: true, checkService: checkService)
+        dotsView = LCodeLayerView(frame: .zero, config: layerConfig)
 
         dotsView?.setEventCallback({ [weak self] event in
             switch event {
@@ -178,7 +190,7 @@ final class LVerifyMobilePhoneNumberVC: UIViewController {
     /// Request for the CAPTCHA.
     private func _requestCaptcha() {
         // Network reqeust for the captcha.
-        dotsView?.config.correctCode = "961030"
+        dotsView?.config.checkService?.correctCode = "961030"
         _fireCountdownTimer()
     }
 

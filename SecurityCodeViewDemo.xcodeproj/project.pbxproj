@@ -8,8 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		9A17CA902713E04B00BE2017 /* CommonExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A17CA8F2713E04B00BE2017 /* CommonExtensions.swift */; };
-		9A1ABD952701C56A0033425C /* SecurityCodeDotsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A1ABD942701C56A0033425C /* SecurityCodeDotsView.swift */; };
-		9A1ABD972701C58C0033425C /* SecurityCodeLayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A1ABD962701C58C0033425C /* SecurityCodeLayerView.swift */; };
+		9A1ABD952701C56A0033425C /* LCodeDotsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A1ABD942701C56A0033425C /* LCodeDotsView.swift */; };
+		9A1ABD972701C58C0033425C /* LCodeLayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A1ABD962701C58C0033425C /* LCodeLayerView.swift */; };
 		9A1ABD992701C5CF0033425C /* SecurityCodeInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A1ABD982701C5CF0033425C /* SecurityCodeInputView.swift */; };
 		9A2C2D2D27116F5500535EC1 /* LSetSecurityCodeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A2C2D2C27116F5500535EC1 /* LSetSecurityCodeVC.swift */; };
 		9A4F2EB5270599280082DA85 /* LAlertViewLite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A4F2EB4270599280082DA85 /* LAlertViewLite.swift */; };
@@ -24,6 +24,8 @@
 		9A7458CF26FC463700D1A6CF /* PasswordAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A7458CE26FC463700D1A6CF /* PasswordAlertView.swift */; };
 		9A7458D226FC46F600D1A6CF /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 9A7458D126FC46F600D1A6CF /* SnapKit */; };
 		9A7AE908271426FC002E7059 /* SharedCountdownTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A7AE907271426FC002E7059 /* SharedCountdownTimer.swift */; };
+		9A9082DE271D4DDB008FAB4D /* LCodeCheckService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9082DD271D4DDB008FAB4D /* LCodeCheckService.swift */; };
+		9A9082E0271D55AB008FAB4D /* SecurityCodeCheckService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9082DF271D55AB008FAB4D /* SecurityCodeCheckService.swift */; };
 		9AB8E78726FC859D0067BCA1 /* SecurityCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AB8E78626FC859D0067BCA1 /* SecurityCodeView.swift */; };
 /* End PBXBuildFile section */
 
@@ -46,8 +48,8 @@
 
 /* Begin PBXFileReference section */
 		9A17CA8F2713E04B00BE2017 /* CommonExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonExtensions.swift; sourceTree = "<group>"; };
-		9A1ABD942701C56A0033425C /* SecurityCodeDotsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecurityCodeDotsView.swift; sourceTree = "<group>"; };
-		9A1ABD962701C58C0033425C /* SecurityCodeLayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecurityCodeLayerView.swift; sourceTree = "<group>"; };
+		9A1ABD942701C56A0033425C /* LCodeDotsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LCodeDotsView.swift; sourceTree = "<group>"; };
+		9A1ABD962701C58C0033425C /* LCodeLayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LCodeLayerView.swift; sourceTree = "<group>"; };
 		9A1ABD982701C5CF0033425C /* SecurityCodeInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecurityCodeInputView.swift; sourceTree = "<group>"; };
 		9A2C2D2C27116F5500535EC1 /* LSetSecurityCodeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LSetSecurityCodeVC.swift; sourceTree = "<group>"; };
 		9A4F2EB4270599280082DA85 /* LAlertViewLite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LAlertViewLite.swift; sourceTree = "<group>"; };
@@ -67,6 +69,8 @@
 		9A7458C226FC453200D1A6CF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9A7458CE26FC463700D1A6CF /* PasswordAlertView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PasswordAlertView.swift; sourceTree = "<group>"; };
 		9A7AE907271426FC002E7059 /* SharedCountdownTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedCountdownTimer.swift; sourceTree = "<group>"; };
+		9A9082DD271D4DDB008FAB4D /* LCodeCheckService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LCodeCheckService.swift; sourceTree = "<group>"; };
+		9A9082DF271D55AB008FAB4D /* SecurityCodeCheckService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecurityCodeCheckService.swift; sourceTree = "<group>"; };
 		9AB8E78626FC859D0067BCA1 /* SecurityCodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecurityCodeView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -99,10 +103,12 @@
 		9A1ABD932701C5510033425C /* CodeInputView */ = {
 			isa = PBXGroup;
 			children = (
-				9AB8E78626FC859D0067BCA1 /* SecurityCodeView.swift */,
-				9A1ABD942701C56A0033425C /* SecurityCodeDotsView.swift */,
-				9A1ABD962701C58C0033425C /* SecurityCodeLayerView.swift */,
+				9A1ABD942701C56A0033425C /* LCodeDotsView.swift */,
+				9A1ABD962701C58C0033425C /* LCodeLayerView.swift */,
+				9A9082DD271D4DDB008FAB4D /* LCodeCheckService.swift */,
 				9A1ABD982701C5CF0033425C /* SecurityCodeInputView.swift */,
+				9AB8E78626FC859D0067BCA1 /* SecurityCodeView.swift */,
+				9A9082DF271D55AB008FAB4D /* SecurityCodeCheckService.swift */,
 			);
 			path = CodeInputView;
 			sourceTree = "<group>";
@@ -317,15 +323,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9A1ABD972701C58C0033425C /* SecurityCodeLayerView.swift in Sources */,
+				9A1ABD972701C58C0033425C /* LCodeLayerView.swift in Sources */,
 				9A17CA902713E04B00BE2017 /* CommonExtensions.swift in Sources */,
 				9A7AE908271426FC002E7059 /* SharedCountdownTimer.swift in Sources */,
 				9A7458CF26FC463700D1A6CF /* PasswordAlertView.swift in Sources */,
+				9A9082DE271D4DDB008FAB4D /* LCodeCheckService.swift in Sources */,
+				9A9082E0271D55AB008FAB4D /* SecurityCodeCheckService.swift in Sources */,
 				9A7458A326FC453000D1A6CF /* ViewController.swift in Sources */,
 				9A4F2EB5270599280082DA85 /* LAlertViewLite.swift in Sources */,
 				9AB8E78726FC859D0067BCA1 /* SecurityCodeView.swift in Sources */,
 				9A1ABD992701C5CF0033425C /* SecurityCodeInputView.swift in Sources */,
-				9A1ABD952701C56A0033425C /* SecurityCodeDotsView.swift in Sources */,
+				9A1ABD952701C56A0033425C /* LCodeDotsView.swift in Sources */,
 				9A2C2D2D27116F5500535EC1 /* LSetSecurityCodeVC.swift in Sources */,
 				9A74589F26FC453000D1A6CF /* AppDelegate.swift in Sources */,
 				9A7458A126FC453000D1A6CF /* SceneDelegate.swift in Sources */,

@@ -10,37 +10,37 @@ import SnapKit
 
 /// 安全码输入界面。
 final class SecurityCodeInputView: UIView {
-    /// 视图交互事件
+    /// 视图交互事件。
     public enum Event {
-        /// 输入结束（输入正确，输入错误，不计较输入结果）
+        /// 输入结束（输入正确，输入错误，不计较输入结果）。
         case done(Bool?)
-        /// 关闭页面
+        /// 关闭页面。
         case dismiss
-        /// 忘记安全码
+        /// 忘记安全码。
         case forgetCode
-        /// 输错次数超标
+        /// 输错次数超标。
         case wrongTimeout
     }
 
     public typealias EventBlock = (_ event: Event) -> Void
 
-    /// 关闭按钮
+    /// 关闭按钮。
     private var closeButton: UIButton?
-    /// 标题
+    /// 标题。
     private var titleText: UILabel?
-    /// 输入错误时提示文本
+    /// 输入错误时提示文本。
     private var alertText: UILabel?
-    /// 忘记安全码按钮
+    /// 忘记安全码按钮。
     private var forgetCodeButton: UIButton?
-    /// 安全码视图
-    private var codeView: SecurityCodeLayerView?
-    /// 事件回调
+    /// 安全码视图。
+    private var codeView: LCodeLayerView?
+    /// 事件回调。
     private var eventCallback: EventBlock?
-    /// 安全码位数
+    /// 安全码位数。
     private var count: Int
-    /// 最大的输入次数，超过五次输入错误，则展示达到上限界面
+    /// 最大的输入次数，超过五次输入错误，则展示达到上限界面。
     private let maxInputWrongTime = 3
-    /// 输入错误次数
+    /// 输入错误次数。
     private var inputLeftTime: Int = 3
 
     init(codeCount: Int, frame: CGRect) {
@@ -55,8 +55,10 @@ final class SecurityCodeInputView: UIView {
 
     private func _addChildViews() {
         // 安全码输入
-        let layerConfig = SecurityCodeLayerView.Configuration(count: 6, innerSpace: 10, bottomLineHeight: 1, dotSize: CGSize(width: 10, height: 10), isShowCodeBlinkly: false, isNeedCheck: true, correctCode: LCodeManager.shared.securityCode)
-        codeView = SecurityCodeLayerView(frame: .zero, config: layerConfig)
+        var checkService = SecurityCodeCheckService()
+        checkService.correctCode = "961030"
+        let layerConfig = LCodeLayerView.Configuration(count: 6, innerSpace: 10, bottomLineHeight: 1, dotSize: CGSize(width: 10, height: 10), isShowCodeBlinkly: false, isNeedCheck: true, checkService: checkService)
+        codeView = LCodeLayerView(frame: .zero, config: layerConfig)
         addSubview(codeView!)
         codeView?.snp.makeConstraints({ make in
             make.centerX.equalToSuperview()

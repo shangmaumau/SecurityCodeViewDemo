@@ -1,5 +1,5 @@
 //
-//  SecurityCodeLayerView.swift
+//  LCodeLayerView.swift
 //  SecurityCodeViewDemo
 //
 //  Created by suxiangnan on 2021/9/27.
@@ -9,24 +9,24 @@ import UIKit
 import SnapKit
 
 /// 安全码线点视图。
-final class SecurityCodeLayerView: UIView, UITextFieldDelegate {
-    /// 配置项
+final class LCodeLayerView: UIView, UITextFieldDelegate {
+    /// 配置项。
     public struct Configuration {
-        /// 安全码数字个数，默认 6 个
+        /// 安全码数字个数，默认 6 个。
         public var count: Int = 6
         /// 底线的间距（底线宽度会自适应：
-        /// `(width - (count - 1) * innerSpace) / count`）
+        /// `(width - (count - 1) * innerSpace) / count)`）。
         public var innerSpace: CGFloat
-        /// 底线的高度，默认为 1
+        /// 底线的高度，默认为 1.
         public var bottomLineHeight: CGFloat = 1.0
-        /// 黑圆点的尺寸，默认长宽为 10
+        /// 黑圆点的尺寸，默认长宽为 10.
         public var dotSize: CGSize = CGSize(width: 10, height: 10)
-        /// 短暂展示输入的数字，默认不展示
+        /// 短暂展示输入的数字，默认不展示。
         public var isShowCodeBlinkly: Bool = false
-        /// 是否需要检查输入的正确性，默认不需要
+        /// 是否需要检查输入的正确性，默认不需要。
         public var isNeedCheck: Bool = false
-        /// 正确的码，默认为空
-        public var correctCode: String = ""
+        /// 检查密码正确与否的服务。
+        public var checkService: LCodeCheckService?
     }
 
     public enum Event {
@@ -36,23 +36,23 @@ final class SecurityCodeLayerView: UIView, UITextFieldDelegate {
 
     public typealias EventBlock = (_ event: Event) -> Void
 
-    /// 线图层的数组
+    /// 线图层的数组。
     private var sublayers: [CAShapeLayer] = []
-    /// 输入框，不显示，在最底层，响应输入专用
+    /// 输入框，不显示，在最底层，响应输入专用。
     private var textField: UITextField?
-    /// 点视图
-    private var dotsView: SecurityCodeDotsView?
-    /// 线图层是否已添加
+    /// 点视图。
+    private var dotsView: LCodeDotsView?
+    /// 线图层是否已添加。
     private var isAdd = false
-    /// 当前是否输入错误，红色代表错误
+    /// 当前是否输入错误，红色代表错误。
     private var isRed = false
-    /// 冻结一会儿 不让用户持续输入
+    /// 冻结一会儿 不让用户持续输入。
     private var isNeedFreeze = false
-    /// 事件回调
+    /// 事件回调。
     private var eventCallback: EventBlock?
-    /// 配置项
+    /// 配置项。
     public var config: Configuration
-    /// 密码位数
+    /// 密码位数。
     private var codeCount: CGFloat {
         CGFloat(config.count)
     }
@@ -75,7 +75,7 @@ final class SecurityCodeLayerView: UIView, UITextFieldDelegate {
         }
     }
 
-    /// 变红，输入错误时会调用
+    /// 变红，输入错误时会调用。
     public func turnRed() {
         sublayers.forEach { layer in
             layer.strokeColor = UIColor(red: 245 / 255.0, green: 95 / 255.0, blue: 78 / 255.0, alpha: 1).cgColor
@@ -83,7 +83,7 @@ final class SecurityCodeLayerView: UIView, UITextFieldDelegate {
         isRed = true
     }
 
-    /// 变默认，重新输入时恢复使用
+    /// 变默认，重新输入时恢复使用。
     public func turnDefault() {
         sublayers.forEach { layer in
             // rgba(168, 171, 179, 1)
@@ -92,21 +92,22 @@ final class SecurityCodeLayerView: UIView, UITextFieldDelegate {
         isRed = false
     }
 
-    /// 唤起键盘输入
+    /// 唤起键盘输入。
     public func getUp() {
         // UIView.setAnimationsEnabled(false)
         textField?.becomeFirstResponder()
         turnDefault()
         dotsView?.deleteAll()
+        textField?.text = ""
         // UIView.setAnimationsEnabled(true)
     }
 
-    /// 降下键盘
+    /// 降下键盘。
     public func getDown() {
         textField?.resignFirstResponder()
     }
 
-    /// 设置完成（输入正确）的回调
+    /// 设置完成（输入正确）的回调。
     public func setEventCallback(_ callback: @escaping EventBlock) {
         eventCallback = callback
     }
@@ -123,8 +124,8 @@ final class SecurityCodeLayerView: UIView, UITextFieldDelegate {
 
         addSubview(textField!)
 
-        let dotConfig = SecurityCodeDotsView.Configuration(count: config.count, innerSpace: config.innerSpace, dotSize: config.dotSize, isShowCodeBlinkly: config.isShowCodeBlinkly)
-        dotsView = SecurityCodeDotsView(frame: bounds, config: dotConfig)
+        let dotConfig = LCodeDotsView.Configuration(count: config.count, innerSpace: config.innerSpace, dotSize: config.dotSize, isShowCodeBlinkly: config.isShowCodeBlinkly)
+        dotsView = LCodeDotsView(frame: bounds, config: dotConfig)
         addSubview(dotsView!)
 
         textField?.snp.makeConstraints({ make in
@@ -139,36 +140,48 @@ final class SecurityCodeLayerView: UIView, UITextFieldDelegate {
     @objc private func _textFieldDidChangeValue(_ textField: UITextField?) {
         if let textCount = textField?.text?.count,
            textCount == config.count {
-            if config.isNeedCheck {
-                // 拿到足够的数字后
-                // 1.与正确的密码比较，完全匹配则隐藏
-                // 2.不匹配则显示输入错误，清空textfield
-
-                // 输入正确
-                if textField?.text! == config.correctCode {
-                    // 隐藏键盘
-                    textField?.resignFirstResponder()
-                    // 回调告诉父视图我输入正确了
-                    eventCallback?(.done(true))
-                }
-                // 输入错误
-                else {
-                    self.textField?.text = ""
-                    turnRed()
-
-                    isNeedFreeze = true
-                    // 延时清除，否则会导致最后一位输入的无法显示
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) { [weak self] in
-                        self?.dotsView?.deleteAll()
+            if config.isNeedCheck, let inText = textField?.text {
+                // 拿到足够的数字后：
+                // 1. 与正确的密码比较，完全匹配则隐藏；
+                // 2. 不匹配则显示输入错误，清空textfield。
+                
+                do {
+                    
+                    try config.checkService?.checkCode(inText, completionHandler: { isCorrect in
+                        // 输入正确
+                        if isCorrect {
+                            // 隐藏键盘
+                            textField?.resignFirstResponder()
+                            // 回调告诉父视图我输入正确了
+                            eventCallback?(.done(true))
+                        }
+                        // 输入错误
+                        else {
+                            self.textField?.text = ""
+                            turnRed()
+                            
+                            isNeedFreeze = true
+                            // 延时清除，否则会导致最后一位输入的无法显示。
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) { [weak self] in
+                                self?.dotsView?.deleteAll()
+                            }
+                            // 冷冻一会儿，防止用户输入过快，导致错误提醒出现的时候，
+                            // 又出现了输入一两位的情况。
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                                [weak self] in
+                                self?.isNeedFreeze = false
+                            }
+                            // 回调告诉父视图我输入错误了
+                            eventCallback?(.done(false))
+                        }
+                    })
+                } catch {
+                    if let checkError = error as? LCheckError {
+                        switch checkError {
+                        default:
+                            break
+                        }
                     }
-                    // 冷冻一会儿，防止用户输入过快，导致错误提醒出现的时候，
-                    // 又出现了输入一两位的情况
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-                        [weak self] in
-                        self?.isNeedFreeze = false
-                    }
-                    // 回调告诉父视图我输入错误了
-                    eventCallback?(.done(false))
                 }
             } else {
                 // textField?.resignFirstResponder()

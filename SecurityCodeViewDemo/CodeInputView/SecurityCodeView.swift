@@ -14,13 +14,13 @@ public typealias VoidBlock = () -> Void
 /// 安全码全流程处理视图。
 final class SecurityCodeView: UIView {
     public enum Event {
-        /// 输入错误次数过多
+        /// 输入错误次数过多。
         case wrongInputTimeout
-        /// 忘记密码
+        /// 忘记密码。
         case forgetCode
-        /// 关闭页面
+        /// 关闭页面。
         case dismiss
-        /// 成功
+        /// 成功。
         case success
     }
 

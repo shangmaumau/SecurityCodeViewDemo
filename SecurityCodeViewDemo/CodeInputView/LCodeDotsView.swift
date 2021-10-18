@@ -1,5 +1,5 @@
 //
-//  SecurityCodeDotsView.swift
+//  LCodeDotsView.swift
 //  SecurityCodeViewDemo
 //
 //  Created by suxiangnan on 2021/9/27.
@@ -8,7 +8,7 @@
 import UIKit
 
 /// 安全码点视图。
-final class SecurityCodeDotsView: UIView {
+final class LCodeDotsView: UIView {
     public struct Configuration {
         public var count: Int
         public var innerSpace: CGFloat
@@ -16,17 +16,17 @@ final class SecurityCodeDotsView: UIView {
         public var isShowCodeBlinkly: Bool = false
     }
 
-    /// 点图层数组
+    /// 点图层数组。
     private var dotLayers: [CALayer] = []
-    /// 底下的数字
+    /// 底下的数字。
     private var dotLabels: [UILabel] = []
     /// 当前索引位置，-1 表示未输入任何数。
     private var currentIndex: Int = -1
-    /// 标记位，图层是否已经添加
+    /// 标记位，图层是否已经添加。
     private var isAdd: Bool = false
-    /// 配置项
+    /// 配置项。
     private var config: Configuration
-    /// 密码位数
+    /// 密码位数。
     private var codeCount: CGFloat {
         CGFloat(config.count)
     }
@@ -51,7 +51,7 @@ final class SecurityCodeDotsView: UIView {
         let unitWidth = (bounds.width - (codeCount - 1) * config.innerSpace) / codeCount
         let biggerWidth = unitWidth + config.innerSpace
         let unitHeight = bounds.height
-        // 如果设定的size大于每个dot占据的长宽，则削足适履
+        // 如果设定的size大于每个dot占据的长宽，则削足适履。
         if size.width > unitWidth.rounded(.down) {
             size.width = unitWidth.rounded(.down)
         }
@@ -88,16 +88,16 @@ final class SecurityCodeDotsView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    /// 添加一个点
+    /// 添加一个点。
     public func addDot(_ text: String) {
         guard _isInRange(currentIndex) else {
             return
         }
-        // 先加index，再变对应的为不透明
+        // 先加index，再变对应的为不透明。
         currentIndex += 1
 
-        // block中捕获的值，如果此处不另复制值，则会跟随currentIndex的值而变化
-        // 这样在延时之后，获得到的就成了新值而非期望的旧值
+        // block中捕获的值，如果此处不另复制值，则会跟随currentIndex的值而变化，
+        // 这样在延时之后，获得到的就成了新值而非期望的旧值。
         let cindex = currentIndex
         if config.isShowCodeBlinkly {
             dotLabels[cindex].alpha = 1.0
@@ -121,24 +121,24 @@ final class SecurityCodeDotsView: UIView {
         }
     }
 
-    /// 删除一个点
+    /// 删除一个点。
     public func deleteDot() {
         guard _isInRange(currentIndex) else {
             return
         }
-        // 先将当前变透明，再减index
+        // 先将当前变透明，再减index。
         UIView.animate(withDuration: 0.2) { [unowned self] in
             dotLayers[currentIndex].opacity = 0
         }
         currentIndex -= 1
     }
 
-    /// 删除所有点
+    /// 删除所有点。
     public func deleteAll() {
         UIView.animate(withDuration: 0.2) { [unowned self] in
             dotLayers.forEach { $0.opacity = 0 }
         }
-        // 重置当前索引
+        // 重置当前索引。
         currentIndex = -1
     }
 

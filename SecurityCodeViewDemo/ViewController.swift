@@ -25,7 +25,7 @@ class ViewController: UIViewController {
     private var mainView: SecurityCodeView?
     private var alertView: LAlertViewLite?
 
-    private var testPart: TestPart = .pushSecurityCode
+    private var testPart: TestPart = .popSecurityCode
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -55,7 +55,7 @@ class ViewController: UIViewController {
             mainView?.showOnKeyWindow(with: { [weak self] event in
                 switch event {
                 case .wrongInputTimeout:
-                    self?._showAlert(title: NSLocalizedString("安全码验证已达上限", comment: ""), subtitle: NSLocalizedString("请稍后再试", comment: ""), cancel: NSLocalizedString("得了", comment: ""), set: NSLocalizedString("知道了", comment: ""))
+                    self?._showAlert(title: NSLocalizedString("安全码验证已达上限", comment: ""), subtitle: NSLocalizedString("请稍后再试", comment: ""), cancel: nil, set: NSLocalizedString("知道了", comment: ""))
                 default:
                     break
                 }
