@@ -8,9 +8,6 @@
 import UIKit
 import SnapKit
 
-public typealias BooleanBlock = (_ isDone: Bool) -> Void
-public typealias VoidBlock = () -> Void
-
 /// 安全码全流程处理视图。
 final class SecurityCodeView: UIView {
     public enum Event {
@@ -95,7 +92,7 @@ final class SecurityCodeView: UIView {
         }
     }
 
-    public func showOnKeyWindow(with eventCallback: @escaping EventBlock) {
+    public func showOnKeyWindow(eventCallback: @escaping EventBlock) {
         var keyWindow: UIWindow?
         for window in UIApplication.shared.windows where window.isKeyWindow {
             keyWindow = window

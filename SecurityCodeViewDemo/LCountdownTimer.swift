@@ -1,5 +1,5 @@
 //
-//  SharedCountdownTimer.swift
+//  LCountdownTimer.swift
 //  SecurityCodeViewDemo
 //
 //  Created by suxiangnan on 2021/10/11.
@@ -7,8 +7,8 @@
 
 import Foundation
 
-public class SharedCountdownTimer {
-    static let shared = SharedCountdownTimer()
+public class LCountdownTimer {
+    static let shared = LCountdownTimer()
     private init() {
         decreaseSeconds = countdownSeconds
         realInit()

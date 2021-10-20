@@ -152,7 +152,7 @@ final class LVerifyMobilePhoneNumberVC: UIViewController {
                 if isCorrect == true {
                     self?.dotsView?.getDown()
                     self?._pushToSetSecurityCodeVC()
-                    SharedCountdownTimer.shared.shutdown()
+                    LCountdownTimer.shared.shutdown()
                 }
 
             default:
@@ -195,7 +195,7 @@ final class LVerifyMobilePhoneNumberVC: UIViewController {
     }
 
     private func _restoreCountdownTimer() {
-        if SharedCountdownTimer.shared.isRunning {
+        if LCountdownTimer.shared.isRunning {
             _fireCountdownTimer()
         } else {
             _updateResendButtonTitle(toSend: true, leftTime: nil)
@@ -204,7 +204,7 @@ final class LVerifyMobilePhoneNumberVC: UIViewController {
 
     /// Fire 60s countdown timer.
     private func _fireCountdownTimer() {
-        SharedCountdownTimer.shared.fire { [weak self] isTimeup, leftSeconds in
+        LCountdownTimer.shared.fire { [weak self] isTimeup, leftSeconds in
             self?._updateResendButtonTitle(toSend: isTimeup, leftTime: leftSeconds)
         }
     }

@@ -23,7 +23,7 @@
 		9A7458C126FC453200D1A6CF /* SecurityCodeViewDemoUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A7458C026FC453200D1A6CF /* SecurityCodeViewDemoUITests.swift */; };
 		9A7458CF26FC463700D1A6CF /* PasswordAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A7458CE26FC463700D1A6CF /* PasswordAlertView.swift */; };
 		9A7458D226FC46F600D1A6CF /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 9A7458D126FC46F600D1A6CF /* SnapKit */; };
-		9A7AE908271426FC002E7059 /* SharedCountdownTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A7AE907271426FC002E7059 /* SharedCountdownTimer.swift */; };
+		9A7AE908271426FC002E7059 /* LCountdownTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A7AE907271426FC002E7059 /* LCountdownTimer.swift */; };
 		9A9082DE271D4DDB008FAB4D /* LCodeCheckService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9082DD271D4DDB008FAB4D /* LCodeCheckService.swift */; };
 		9A9082E0271D55AB008FAB4D /* SecurityCodeCheckService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9082DF271D55AB008FAB4D /* SecurityCodeCheckService.swift */; };
 		9AB8E78726FC859D0067BCA1 /* SecurityCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AB8E78626FC859D0067BCA1 /* SecurityCodeView.swift */; };
@@ -68,7 +68,7 @@
 		9A7458C026FC453200D1A6CF /* SecurityCodeViewDemoUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecurityCodeViewDemoUITests.swift; sourceTree = "<group>"; };
 		9A7458C226FC453200D1A6CF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9A7458CE26FC463700D1A6CF /* PasswordAlertView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PasswordAlertView.swift; sourceTree = "<group>"; };
-		9A7AE907271426FC002E7059 /* SharedCountdownTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedCountdownTimer.swift; sourceTree = "<group>"; };
+		9A7AE907271426FC002E7059 /* LCountdownTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LCountdownTimer.swift; sourceTree = "<group>"; };
 		9A9082DD271D4DDB008FAB4D /* LCodeCheckService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LCodeCheckService.swift; sourceTree = "<group>"; };
 		9A9082DF271D55AB008FAB4D /* SecurityCodeCheckService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecurityCodeCheckService.swift; sourceTree = "<group>"; };
 		9AB8E78626FC859D0067BCA1 /* SecurityCodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecurityCodeView.swift; sourceTree = "<group>"; };
@@ -113,8 +113,8 @@
 		9A1ABD932701C5510033425C /* LCodeInputView */ = {
 			isa = PBXGroup;
 			children = (
-				9A1ABD982701C5CF0033425C /* SecurityCodeInputView.swift */,
 				9AB8E78626FC859D0067BCA1 /* SecurityCodeView.swift */,
+				9A1ABD982701C5CF0033425C /* SecurityCodeInputView.swift */,
 				9A9082DF271D55AB008FAB4D /* SecurityCodeCheckService.swift */,
 			);
 			path = LCodeInputView;
@@ -160,7 +160,7 @@
 			isa = PBXGroup;
 			children = (
 				9A17CA8F2713E04B00BE2017 /* CommonExtensions.swift */,
-				9A7AE907271426FC002E7059 /* SharedCountdownTimer.swift */,
+				9A7AE907271426FC002E7059 /* LCountdownTimer.swift */,
 				9A7458CE26FC463700D1A6CF /* PasswordAlertView.swift */,
 				9A1819E3271D6D4E00A8DD70 /* LCodeLayer */,
 				9A4F2EB3270598D90082DA85 /* LAlertViewLite */,
@@ -333,7 +333,7 @@
 			files = (
 				9A1ABD972701C58C0033425C /* LCodeLayerView.swift in Sources */,
 				9A17CA902713E04B00BE2017 /* CommonExtensions.swift in Sources */,
-				9A7AE908271426FC002E7059 /* SharedCountdownTimer.swift in Sources */,
+				9A7AE908271426FC002E7059 /* LCountdownTimer.swift in Sources */,
 				9A7458CF26FC463700D1A6CF /* PasswordAlertView.swift in Sources */,
 				9A9082DE271D4DDB008FAB4D /* LCodeCheckService.swift in Sources */,
 				9A9082E0271D55AB008FAB4D /* SecurityCodeCheckService.swift in Sources */,
